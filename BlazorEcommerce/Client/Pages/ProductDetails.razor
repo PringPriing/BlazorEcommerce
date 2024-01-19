@@ -1,6 +1,6 @@
 ﻿@page "/product/{id:int}"
 @inject IProductService ProductService
-
+@inject ICartService CartService
 @if (product == null)
 {
     <span>@message</span>
@@ -34,6 +34,9 @@ else
                     </h6>
                 }
             }
+            <button class="btn btn-primary" @onclick="AddToCart">
+                <i class="oi oi-cart"></i>&nbsp;&nbsp;&nbsp;Add to Cart
+            </button>
             <h4 class="price">
                 $@GetSelectedVariant().Price
             </h4>
@@ -53,7 +56,7 @@ else
     {
         message = "Loading product...";
         var result = await ProductService.GetProduct(Id);
-        if (!result.Sucess)
+        if (!result.Success)
         {
             message = result.Message;
         }
@@ -71,6 +74,18 @@ else
     {
         var variant = product.Variants.FirstOrDefault(v => v.ProductTypeId == currentTypeId);
         return variant;
+    }
+
+    private async Task AddToCart()
+    {
+        var productVariant = GetSelectedVariant();
+        var cartItem = new CartItem
+            {
+                ProductId = productVariant.ProductId,
+                ProductTypeId = productVariant.ProductTypeId
+            };
+
+        await CartService.AddToCart(cartItem);
     }
 
 }

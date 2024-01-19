@@ -8,6 +8,9 @@ public class DataContext :DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<CartItem>()
+      .HasKey(ci => new {ci.UserId ,ci.ProductId, ci.ProductTypeId });
+
         modelBuilder.Entity<ProductVariant>()
             .HasKey(p => new { p.ProductId,p.ProductTypeId });
 
@@ -272,5 +275,7 @@ public class DataContext :DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<ProductType> ProductTypes { get; set; }
     public DbSet<ProductVariant> ProductVariants { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<CartItem> CartItems { get; set; }
 
 }

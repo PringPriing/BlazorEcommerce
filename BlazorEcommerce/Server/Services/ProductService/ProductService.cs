@@ -33,7 +33,7 @@ namespace BlazorEcommerce.Server.Services.ProductService
 
             if (product == null)
             {
-                response.Sucess = false;
+                response.Success = false;
                 response.Message = "Sorry, but this product does not exist.";
             }
             else
@@ -48,7 +48,7 @@ namespace BlazorEcommerce.Server.Services.ProductService
             var response = new ServiceResponse<List<Product>>()
             {
                 Data = await _context.Products
-                        .Where(p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower()))
+                        .Where(predicate: p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower()))
                         .Include(p => p.Variants)
                         .ToListAsync()
                 
