@@ -38,7 +38,7 @@ namespace BlazorEcommerce.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<List<CartProductResponse>>>> GetCartProducts()
         {
-            var result = await _cartService.GetCartProducts();
+            var result = await _cartService.GetDbCartProducts(null);
             return Ok(result);
         }
 
