@@ -42,6 +42,10 @@ public class PaymentService : IPaymentService
         var options = new SessionCreateOptions
         {
             CustomerEmail = _authService.GetUserEmail(),
+            ShippingAddressCollection = new SessionShippingAddressCollectionOptions
+            {
+                AllowedCountries = new List<string>() {"AU" }
+            },
             PaymentMethodTypes = new List<string>() { "card"},
             LineItems = lineItems,
             Mode = "payment",
